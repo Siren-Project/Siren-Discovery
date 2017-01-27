@@ -28,9 +28,13 @@ class RestService:
             logging.warning("Missing information of provision %s", request.json)
             resp = Response("Error, did not include correct request information", status=400, mimetype='application/json')
             return resp
-        db.add_node(request.json['ip'])
+	# Removed because container cannot get host addr
+	#        db.add_node(request.json['ip'])
+	
+	db.add_node(request.remote_addr)
+	request.remote_addr
 
-        logging.info("Node added to db %s",request.json['ip'])
+        logging.info("Node added to db %s",request.remote_addr)
         resp = Response("Node added", status=200, mimetype='application/json')
         return resp
 
