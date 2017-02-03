@@ -30,9 +30,9 @@ class RestService:
             return resp
 	# Removed because container cannot get host addr
 	#        db.add_node(request.json['ip'])
-	
-	db.add_node(request.remote_addr)
-	request.remote_addr
+
+	    db.add_node(request.remote_addr)
+	    request.remote_addr
 
         logging.info("Node added to db %s",request.remote_addr)
         resp = Response("Node added", status=200, mimetype='application/json')
