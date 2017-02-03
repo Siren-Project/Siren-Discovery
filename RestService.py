@@ -24,6 +24,7 @@ class RestService:
     @app.route('/nodes/register_node', methods=['POST', 'GET'])
     def api_register_node():
         logging.debug(request.json)
+        print request.json
         if not request.json or 'ip' not in request.json:
             logging.warning("Missing information of provision %s", request.json)
             resp = Response("Error, did not include correct request information", status=400, mimetype='application/json')
