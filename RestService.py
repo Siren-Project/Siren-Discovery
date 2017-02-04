@@ -25,6 +25,7 @@ class RestService:
     def api_register_node():
         logging.debug(request.json)
         print request.json
+        # TODO add more checking for different fields
         if not request.json or 'ip' not in request.json:
             logging.warning("Missing information of provision %s", request.json)
             resp = Response("Error, did not include correct request information", status=400, mimetype='application/json')
@@ -32,6 +33,7 @@ class RestService:
 	# Removed because container cannot get host addr
 	#        db.add_node(request.json['ip'])
 
+        # TODO Add more information to database. include timestamp.
 	    db.add_node(request.remote_addr)
 	    request.remote_addr
 
