@@ -25,6 +25,7 @@ class DatabaseConnection:
 
     def add_node(self, ip_addr):
         # Potential to add more fields here. Such as information gained from docker info.
+        # Add node identifier (IP address? Will have to be mac address to be unique. Multiple nodes might share IP)
         self.nodes_table.insert_one({'ip':ip_addr})
 
     def get_nodes(self):
