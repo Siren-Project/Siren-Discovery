@@ -37,7 +37,7 @@ class RestService:
             return resp
             # Removed because container cannot get host addr
             #        db.add_node(request.json['ip'])
-        data = json.loads(request.json)
+        data = json.loads(str(request.json))
         data.time = datetime.datetime.now()
         # TODO Add more information to database. include timestamp.
         db.add_node({request.remote_addr: data})
