@@ -3,6 +3,8 @@ from pprint import pprint
 import json
 
 '''Connects with mongoDB'''
+
+
 class DatabaseConnection:
 
     def __init__(self):
