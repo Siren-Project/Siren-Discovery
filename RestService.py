@@ -39,10 +39,12 @@ class RestService:
         # TODO loading object from json not working
         data = request.json
         data['time'] = datetime.datetime.now()
-
-        docker_port = "2375"
+        remote_address = request.remote_addr.replace('.', '_')
+        docker_port = ":2375"
+        node_key = remote_address+docker_port
+        print node_key
         # TODO Add more information to database. include timestamp.
-        db.add_node({request.remote_addr.replace('.', '_')+docker_port: data})
+        db.add_node({node_key: data})
 
         logging.info("Node added to db %s", request.remote_addr)
         resp = Response("Node added", status=200, mimetype='application/json')
