@@ -28,7 +28,6 @@ class RestService:
     @app.route('/nodes/register_node', methods=['POST', 'GET'])
     def api_register_node():
         logging.debug(request.json)
-        print request.json
         # TODO add more checking for different fields
         if not request.json or 'ip' not in request.json:
             logging.warning("Missing information of provision %s", request.json)
@@ -37,11 +36,11 @@ class RestService:
             return resp
             # Removed because container cannot get host addr
             #        db.add_node(request.json['ip'])
-        data = json.loads(str(request.json))
+        # TODO loading object from json not working
+        data = request.json
         data.time = datetime.datetime.now()
         # TODO Add more information to database. include timestamp.
         db.add_node({request.remote_addr: data})
-        request.remote_addr
 
         logging.info("Node added to db %s", request.remote_addr)
         resp = Response("Node added", status=200, mimetype='application/json')
