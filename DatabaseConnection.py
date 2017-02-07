@@ -2,7 +2,7 @@ from pymongo import MongoClient
 from pprint import pprint
 import json
 
-'''Connects with mongoDB'''
+'''Connects with mongoDB instance. See config.json for configuration'''
 
 
 class DatabaseConnection:
@@ -13,22 +13,19 @@ class DatabaseConnection:
             self.password = data['db_password']
             self.username = data['db_username']
             self.port = data['db_port']
+            self.host = data['host']
 
-        self.connection = MongoClient(host="127.0.0.1", port=self.port)
+        self.connection = MongoClient(host=self.host, port=self.port)
         self.siren_db = self.connection.siren
-        if not self.password == "Null":
+        if not self.password == "Null" and not self.username == "Null":
             self.siren_db.authenticate(self.username, self.password)
         self.nodes_table = self.siren_db.nodes
         print(type(self.nodes_table.find()))
         for node in self.nodes_table.find():
             pprint("Node :" + str(node))
 
-        self.connection.close()
-
-    def add_node(self, ip_addr):
-        # Potential to add more fields here. Such as information gained from docker info.
-        # Add node identifier (IP address? Will have to be mac address to be unique. Multiple nodes might share IP)
-        self.nodes_table.insert_one({'ip':ip_addr})
+    def add_node(self, data):
+        self.nodes_table.insert_one(data)
 
     def get_nodes(self):
         return self.nodes_table.find()

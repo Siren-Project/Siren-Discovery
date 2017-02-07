@@ -10,7 +10,7 @@ from RestService import *
 class Discovery:
 
 
-    #Threaded function
+    #Threaded function TODO add handler to kill this thread.
     def start_rest(db):
         rest = RestService(db)
 

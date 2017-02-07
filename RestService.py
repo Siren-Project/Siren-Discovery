@@ -34,19 +34,15 @@ class RestService:
             resp = Response("Error, did not include correct request information", status=400,
                             mimetype='application/json')
             return resp
-            # Removed because container cannot get host addr
-            #        db.add_node(request.json['ip'])
-        # TODO loading object from json not working
+
         data = request.json
         data['time'] = datetime.datetime.now()
-        remote_address = request.remote_addr.replace('.', '_')
-        docker_port = ":2375"
-        node_key = remote_address+docker_port
-        print node_key
-        # TODO Add more information to database. include timestamp.
-        db.add_node({node_key: data})
+        data['remote_ip'] = request.remote_addr
+        data['docker_port'] = 2375
 
-        logging.info("Node added to db %s", request.remote_addr)
+        db.add_node(data)
+
+        logging.info("Node added to db %s", data)
         resp = Response("Node added", status=200, mimetype='application/json')
         return resp
 
