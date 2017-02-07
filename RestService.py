@@ -42,7 +42,7 @@ class RestService:
 
         docker_port = "2375"
         # TODO Add more information to database. include timestamp.
-        db.add_node({request.remote_addr+docker_port: data})
+        db.add_node({request.remote_addr.replace('.', '_')+docker_port: data})
 
         logging.info("Node added to db %s", request.remote_addr)
         resp = Response("Node added", status=200, mimetype='application/json')
