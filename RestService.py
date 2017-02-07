@@ -38,7 +38,7 @@ class RestService:
             #        db.add_node(request.json['ip'])
         # TODO loading object from json not working
         data = request.json
-        data.time = datetime.datetime.now()
+        data['time'] = datetime.datetime.now()
         # TODO Add more information to database. include timestamp.
         db.add_node({request.remote_addr: data})
 
