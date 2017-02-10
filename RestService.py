@@ -7,15 +7,18 @@ import datetime
 
 
 class RestService:
+    """Hosts rest service for adding and retrieving devices and context"""
     app = Flask(__name__)
     db = None
 
     @app.route('/')
     def api_root():
+        """Returns GitHub directory to help with docs."""
         return 'Read <a href="https://github.com/lyndon160/Siren-Discovery"> https://github.com/lyndon160/Siren-Discovery </a> for RESTful documentation'
 
     @app.route('/nodes', methods=['GET'])
     def api_nodes():
+        """Returns all devices and context"""
         data = dumps(db.get_nodes())
         resp = Response(data)
         resp.headers.add('Access-Control-Allow-Origin', '*')
@@ -23,10 +26,11 @@ class RestService:
         resp.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
         return resp
 
-    '''Adds single new node to the database. This includes the nodes IP address'''
+
 
     @app.route('/nodes/register_node', methods=['POST', 'GET'])
     def api_register_node():
+        """Adds single new node to the database. This includes the nodes IP address"""
         logging.debug(request.json)
         # TODO add more checking for different fields
         if not request.json or 'ip' not in request.json:
@@ -46,10 +50,10 @@ class RestService:
         resp = Response("Node added", status=200, mimetype='application/json')
         return resp
 
-    '''Flushes all records in database'''
 
     @app.route('/reset_all', methods=['GET'])
     def api_reset_all():
+        """Flushes all records in database"""
         db.drop_nodes()
         resp = Response(json.dumps("Database reset"))
         resp.headers.add('Access-Control-Allow-Origin', '*')

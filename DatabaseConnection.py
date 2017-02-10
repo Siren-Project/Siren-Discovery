@@ -2,10 +2,13 @@ from pymongo import MongoClient
 from pprint import pprint
 import json
 
-'''Connects with mongoDB instance. See config.json for configuration'''
-
 
 class DatabaseConnection:
+    """
+    =================
+    Connects with mongoDB instance. See config.json for configuration
+    =================
+    """
 
     def __init__(self):
         with open('config.json') as json_data:
@@ -25,10 +28,13 @@ class DatabaseConnection:
             pprint("Node :" + str(node))
 
     def add_node(self, data):
+        """Add a node to mongodb. This should include device stats and context"""
         self.nodes_table.insert_one(data)
 
     def get_nodes(self):
+        """Returns list of all devices and their properties"""
         return self.nodes_table.find()
 
     def drop_nodes(self):
+        """Remove all nodes from the collection"""
         self.nodes_table.drop()
