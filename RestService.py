@@ -50,7 +50,6 @@ class RestService:
         resp = Response("Node added", status=200, mimetype='application/json')
         return resp
 
-
     @app.route('/reset_all', methods=['GET'])
     def api_reset_all():
         """Flushes all records in database"""
